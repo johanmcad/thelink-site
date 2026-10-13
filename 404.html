@@ -6,23 +6,36 @@
 <title>Not found — Link</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#060607">
-<link rel="icon" href="/favicon.ico" sizes="32x32 48x48">
-<link rel="stylesheet" href="/assets/css/site.css">
+<!-- Self-contained on purpose: GitHub Pages serves this file for ANY missing
+     path, so a relative stylesheet link would resolve against the missing
+     path, and a root-absolute one breaks on the github.io sub-path preview. -->
+<style>
+  html { background: #101012; color: #ececf0; }
+  body { margin: 0; min-height: 100svh; display: grid; place-items: center;
+    font: 400 clamp(1rem, 0.95rem + 0.3vw, 1.125rem) / 1.6 "Jost", "Futura", "Century Gothic", sans-serif;
+    padding: 24px; box-sizing: border-box; }
+  main { max-width: 48ch; }
+  .legend { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #57d982; margin: 0 0 14px; }
+  h1 { font-size: clamp(2.3rem, 1.4rem + 4.6vw, 4.4rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.012em; margin: 0 0 18px; }
+  p { color: #c8c8cc; margin: 0 0 28px; }
+  a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; border-radius: 999px;
+    background: #57d982; color: #06130a; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none; }
+</style>
 </head>
 <body>
-
 <main>
-<section class="sec">
-  <div class="wrap">
-    <p class="legend">404</p>
-    <h1>Nothing here.</h1>
-    <p class="lede">That address does not exist on this site. The remote is on your own network, not here — this is only the shop window.</p>
-    <div class="cta" style="margin-top:28px">
-      <a class="btn btn-green" href="/">Home</a>
-    </div>
-  </div>
-</section>
+  <p class="legend">404</p>
+  <h1>Nothing here.</h1>
+  <p>That address does not exist on this site. The remote is on your own network, not here — this is only the shop window.</p>
+  <a id="home" href="/">Home</a>
 </main>
-
+<script>
+  // On the github.io preview the site lives under /<repo>/, so "/" is wrong there.
+  if (/\.github\.io$/.test(location.hostname)) {
+    var seg = location.pathname.split("/")[1];
+    if (seg) document.getElementById("home").href = "/" + seg + "/";
+  }
+</script>
 </body>
 </html>
