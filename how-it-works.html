@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Link works, and why it is safe</title>
+<meta name="description" content="Link is a bridge between your home network and the RS-232 port of the preamplifier. Volume is relative-only, rate-limited and capped by a soft limit enforced in the box. No cloud, no account.">
+<link rel="canonical" href="https://thelinkremote.com/how-it-works.html">
+<meta name="theme-color" content="#060607">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Link">
+<meta property="og:title" content="How Link works, and why it is safe">
+<meta property="og:description" content="A bridge, a mirror and a volume model built for big amplifiers.">
+<meta property="og:url" content="https://thelinkremote.com/how-it-works.html">
+<meta property="og:image" content="https://thelinkremote.com/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="assets/fonts/jost-latin-400-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/config.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Link, home"><img src="assets/brand/thelink-logo.svg" alt="" width="94" height="24"></a>
+    <nav class="nav" id="nav" aria-label="Site">
+      <a href="compatibility.html">Compatibility</a>
+      <a href="how-it-works.html" aria-current="page">How it works</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <a class="btn btn-green btn-small" href="preorder.html">Pre-order</a>
+    <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg class="bars" viewBox="0 0 18 18" aria-hidden="true"><path d="M1 4h16M1 9h16M1 14h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <svg class="x" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="legend">How it works</p>
+    <h1>Quiet by design.</h1>
+    <p class="lede">Link is a bridge. On one side, your home network. On the other, the control port your preamplifier already has. In between, a small amount of software whose first job is to never do anything surprising.</p>
+
+    <figure class="path" aria-labelledby="path-title">
+      <svg viewBox="0 0 760 150" role="img" aria-labelledby="path-title">
+        <title id="path-title">Phone, tablet or computer connects over Wi-Fi to Link, which connects over RS-232 to the preamplifier</title>
+        <rect class="box" x="4" y="40" width="200" height="70" rx="14"/>
+        <text class="lbl" x="104" y="71" text-anchor="middle">PHONE · TABLET · PC</text>
+        <text class="sub" x="104" y="93" text-anchor="middle">any browser, or the app</text>
+        <path class="wire" d="M204 75 H286"/>
+        <path class="tip" d="M286 69 L298 75 L286 81 Z"/>
+        <text class="sub" x="251" y="62" text-anchor="middle">Wi‑Fi</text>
+        <rect class="box" x="300" y="40" width="160" height="70" rx="14"/>
+        <text class="lbl" x="380" y="71" text-anchor="middle">LINK</text>
+        <text class="sub" x="380" y="93" text-anchor="middle">the bridge</text>
+        <path class="wire" d="M460 75 H542"/>
+        <path class="tip" d="M542 69 L554 75 L542 81 Z"/>
+        <text class="sub" x="507" y="62" text-anchor="middle">RS‑232</text>
+        <rect class="box" x="556" y="40" width="200" height="70" rx="14"/>
+        <text class="lbl" x="656" y="71" text-anchor="middle">PREAMPLIFIER</text>
+        <text class="sub" x="656" y="93" text-anchor="middle">owns the state</text>
+      </svg>
+    </figure>
+
+    <div class="blocks">
+      <div>
+        <h3>The bridge</h3>
+        <p>Link translates taps into the preamplifier’s own control language and listens to everything it says back. Nothing is interpreted, nothing is invented.</p>
+      </div>
+      <div>
+        <h3>The mirror</h3>
+        <p>Link shows what the preamplifier has confirmed. Never what it assumes. Turn the knob on the front panel and every screen follows, because they are all looking at the same thing.</p>
+      </div>
+      <div>
+        <h3>Relative only</h3>
+        <p>Link never sends an absolute volume. One step up, one step down, each one acknowledged by the preamplifier before the next. There is no gesture that can jump the volume — no drag, no tap on the dial.</p>
+      </div>
+      <div>
+        <h3>The soft limit</h3>
+        <p>A ceiling you set, enforced inside the box. Volume-up commands stop at the limit no matter which phone sends them, and lowering the limit below the current volume walks the volume down to meet it.</p>
+      </div>
+      <div>
+        <h3>The rate limit</h3>
+        <p>At most one step every 150 milliseconds, whatever any client sends. Holding the button is the phone repeating single steps; let go, or lose the connection, and the stepping stops at once.</p>
+      </div>
+      <div>
+        <h3>The unlock</h3>
+        <p>Going above the limit is a deliberate act — a separate control, shown only once the volume has reached the ceiling — and it undoes itself after thirty seconds.</p>
+      </div>
+      <div>
+        <h3>Nothing leaves your home</h3>
+        <p>The remote runs on your own network. There is no account, no cloud service and no tracking. The only thing Link ever fetches from the internet is its own signed software update.</p>
+      </div>
+      <div>
+        <h3>Mute</h3>
+        <p>One tap, no confirmation, always. Some things should not have friction.</p>
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top:48px">Designed on a system driven by 2 × 450 W of amplification. The safety model is not an afterthought.</p>
+  </div>
+</section>
+
+<hr class="rail">
+
+<section class="sec">
+  <div class="wrap">
+    <p class="legend">Specifications</p>
+    <h2>Link</h2>
+    <table class="spec">
+      <tr><th>Control ports</th><td>3 × 3.5 mm TRS, RS‑232. Any port, any order.</td></tr>
+      <tr><th>Network</th><td>Wi‑Fi 2.4 GHz. Bluetooth LE for first-time setup only.</td></tr>
+      <tr><th>Setup</th><td>From the free Link app for iPhone and Android, about one minute.</td></tr>
+      <tr><th>Remote</th><td>Any modern browser; installs to the home screen like an app. No account.</td></tr>
+      <tr><th>Power</th><td>USB‑C, 5 V, 0.5 A or more. Any phone charger powers it.</td></tr>
+      <tr><th>Cooling</th><td>Passive. Silent, no fan.</td></tr>
+      <tr><th>Status</th><td>One multicolour light and one button: sleep, setup, factory reset.</td></tr>
+      <tr><th>Updates</th><td>Signed releases, installed by the box itself.</td></tr>
+      <tr><th>In the box</th><td>Link and one 3.5 mm control cable. Use any 5 V USB‑C charger you already have; a second device needs an ordinary 3.5 mm stereo cable.</td></tr>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="co"><b>Play and Track AB</b><br>Sweden · <a href="mailto:info@playandtrack.com">info@playandtrack.com</a></div>
+    <nav aria-label="Footer">
+      <a href="compatibility.html">Compatibility</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="support.html">Support</a>
+      <a href="preorder.html">Pre-order</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <p class="disc">Link is an independent product from Play and Track AB. It is not affiliated with, endorsed by, or produced by McIntosh Laboratory, Inc. or any other manufacturer named above; their names are used only to state, factually, which models Link is compatible with.</p>
+  </div>
+</footer>
+
+</body>
+</html>

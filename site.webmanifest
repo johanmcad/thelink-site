@@ -1,0 +1,8 @@
+{
+  "name": "Link",
+  "short_name": "Link",
+  "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }],
+  "theme_color": "#060607",
+  "background_color": "#060607",
+  "display": "browser"
+}
