@@ -350,6 +350,17 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
   padding: 6px 12px;
   letter-spacing: 0.04em;
 }
+/* connector tag on a chip: DB9 models need an adapter cable */
+.models dd span small {
+  margin-left: 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--txt3);
+  vertical-align: 1px;
+}
+.models dd span.db9 { border-color: var(--brd5); }
+.models dd span.unk small { color: var(--dim); }
 
 .spec { width: 100%; border-collapse: collapse; margin-top: 28px; }
 .spec th, .spec td { padding: 14px 0; border-top: 1px solid var(--brd1); text-align: left; vertical-align: top; }
