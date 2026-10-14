@@ -217,24 +217,13 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 .hero .lede { margin-top: 18px; }
 .hero .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px; margin-top: 28px; }
 .stage { position: relative; }
-.stage::before {
-  content: "";
-  position: absolute;
-  inset: 10% -10% 0;
-  background: radial-gradient(ellipse at 50% 72%, var(--surf4) 0%, rgba(28, 28, 32, 0) 62%);
-  pointer-events: none;
-}
-.stage picture, .stage img { position: relative; width: 100%; }
-.stage .reflect {
-  position: relative;
-  transform: scaleY(-1);
-  margin-top: -2%;
-  opacity: 0.55;
-  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.5), transparent 48%);
-  mask-image: linear-gradient(rgba(0, 0, 0, 0.5), transparent 48%);
-  pointer-events: none;
-}
-.hero .rail { margin-top: -6%; }
+/* The hero is a PHOTOGRAPH (the box on the glass top of a preamplifier, tubes
+   lit green) whose edges are already black, so it needs no glow or reflection:
+   it melts into the page. On a phone it bleeds edge to edge; from 900 px up it
+   gets the plate radius. */
+.stage picture, .stage img { width: 100%; }
+.stage { margin-inline: calc(-1 * var(--gutter)); }
+.hero .rail { margin-top: 0; }
 @media (min-width: 900px) {
   .hero { padding-top: clamp(40px, 5vw, 72px); }
   .hero .wrap {
@@ -242,10 +231,10 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
     align-items: center;
     gap: 40px;
   }
-  .hero .stage { margin-right: -6%; }
-  .hero .stage { grid-column: 2; grid-row: 1; }
+  .hero .stage { grid-column: 2; grid-row: 1; margin-inline: 0; }
+  .hero .stage img { border-radius: var(--radius); box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6); }
   .hero .copy { grid-column: 1; grid-row: 1; }
-  .hero .rail { margin-top: -3%; }
+  .hero .rail { margin-top: 40px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .hero .stage picture { animation: settle 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
@@ -267,6 +256,7 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 .center h2, .center .lede { margin-inline: auto; }
 
 .figure { margin: 0; }
+.figure.photo img { border-radius: var(--radius); box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6); }
 .figure figcaption {
   margin-top: 18px;
   color: var(--txt3);
