@@ -303,6 +303,14 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 }
 .phone img { width: 100%; }
 
+/* the configuration pages: three phone frames in a row, tops aligned */
+.phones { display: grid; gap: 28px; margin-top: 36px; justify-items: center; }
+.phone-fig { margin: 0; width: 100%; max-width: 300px; }
+.phone-fig .phone { width: 100%; margin: 0; }
+.phone-fig .phone.top { border-radius: 36px 36px 22px 22px; }
+.phone-fig figcaption { margin-top: 14px; color: var(--txt3); text-align: center; font-size: var(--fs-small); letter-spacing: 0.08em; text-transform: uppercase; }
+@media (min-width: 760px) { .phones { grid-template-columns: repeat(3, 1fr); align-items: start; gap: 24px; } }
+
 .badges { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
 .badges img { height: 48px; width: auto; }
 
