@@ -61,66 +61,72 @@
     }
   }
 
-  // ---- pre-order form
-  var form = document.getElementById("preorder");
-  if (!form) return;
+  // ---- forms (pre-order, test volunteer): one relay, one fallback
+  // A form carries data-relay plus the ids of its message box, success plate
+  // and send button, and data-subject for the email. With a Formspree id it
+  // posts there; without one it opens the visitor's email app, fields filled in.
   var id = String(cfg.FORMSPREE_ID || "").trim();
-  var box = document.getElementById("f-msgbox");
-  var done = document.getElementById("f-done");
-  var send = document.getElementById("f-send");
+  var forms = document.querySelectorAll("form[data-relay]");
+  for (var f = 0; f < forms.length; f++) wire(forms[f]);
 
-  function say(text, isErr) {
-    box.textContent = text;
-    box.className = "msg show" + (isErr ? " err" : "");
-  }
-  function mailtoHref() {
-    var fd = new FormData(form);
-    var lines = [];
-    fd.forEach(function (v, k) {
-      if (k.charAt(0) === "_") return;
-      if (String(v).trim()) lines.push(k + ": " + v);
-    });
-    if (hasPrice) lines.push("price shown: " + priceText);
-    return "mailto:" + contact + "?subject=" + encodeURIComponent("Link pre-order") +
-      "&body=" + encodeURIComponent(lines.join("\n"));
-  }
+  function wire(form) {
+    var box = document.getElementById(form.getAttribute("data-msg"));
+    var done = document.getElementById(form.getAttribute("data-done"));
+    var send = document.getElementById(form.getAttribute("data-send"));
+    var subject = form.getAttribute("data-subject") || "Link";
 
-  if (id) {
-    form.action = "https://formspree.io/f/" + id;
-  } else {
-    // No relay configured: a plain submit still does something sensible.
-    form.action = "mailto:" + contact + "?subject=" + encodeURIComponent("Link pre-order");
-    form.enctype = "text/plain";
-  }
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (!form.reportValidity()) return;
-    var hp = form.elements._gotcha;
-    if (hp && hp.value) return;           // a bot filled the hidden field
-
-    if (!id) {
-      window.location.href = mailtoHref();
-      say("Your email app should open with the details filled in. If it does not, write to " + contact + ".");
-      return;
+    function say(text, isErr) {
+      box.textContent = text;
+      box.className = "msg show" + (isErr ? " err" : "");
+    }
+    function mailtoHref() {
+      var fd = new FormData(form);
+      var lines = [];
+      fd.forEach(function (v, k) {
+        if (k.charAt(0) === "_") return;
+        if (String(v).trim()) lines.push(k + ": " + v);
+      });
+      if (hasPrice && form.id === "preorder") lines.push("price shown: " + priceText);
+      return "mailto:" + contact + "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(lines.join("\n"));
     }
 
-    send.disabled = true;
-    say("Sending…");
-    fetch(form.action, {
-      method: "POST",
-      body: new FormData(form),
-      headers: { Accept: "application/json" },
-    }).then(function (r) {
-      if (!r.ok) throw new Error("status " + r.status);
-      form.hidden = true;
-      box.className = "msg";
-      done.classList.add("show");
-      done.focus();
-    }).catch(function () {
-      say("That did not go through. Email us instead: " + contact, true);
-    }).then(function () {
-      send.disabled = false;
+    if (id) {
+      form.action = "https://formspree.io/f/" + id;
+    } else {
+      form.action = "mailto:" + contact + "?subject=" + encodeURIComponent(subject);
+      form.enctype = "text/plain";
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      var hp = form.elements._gotcha;
+      if (hp && hp.value) return;           // a bot filled the hidden field
+
+      if (!id) {
+        window.location.href = mailtoHref();
+        say("Your email app should open with the details filled in. If it does not, write to " + contact + ".");
+        return;
+      }
+
+      send.disabled = true;
+      say("Sending…");
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      }).then(function (r) {
+        if (!r.ok) throw new Error("status " + r.status);
+        form.hidden = true;
+        box.className = "msg";
+        done.classList.add("show");
+        done.focus();
+      }).catch(function () {
+        say("That did not go through. Email us instead: " + contact, true);
+      }).then(function () {
+        send.disabled = false;
+      });
     });
-  });
+  }
 })();

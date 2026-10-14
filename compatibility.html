@@ -76,9 +76,77 @@
     <h2>Other brands.</h2>
     <p class="lede">Over the network or a control port, with the same volume safety. Written from each manufacturer’s published protocol, not yet verified on a real unit.</p>
     <p class="lede">We are looking for owners of these brands to test with. Volunteers get a Link for free.</p>
-    <div class="cta" style="margin:8px 0 36px">
-      <a class="btn btn-green" href="mailto:info@playandtrack.com?subject=Link%20test%20volunteer&amp;body=Brand%20and%20model%3A%20%0ACountry%3A%20%0A">Volunteer to test</a>
+    <form class="form" id="volunteer" method="POST" action="#" novalidate data-relay data-subject="Link test volunteer" data-msg="v-msgbox" data-done="v-done" data-send="v-send">
+      <div class="row2">
+        <div class="field">
+          <label for="v-name">Name</label>
+          <input id="v-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="v-email">Email</label>
+          <input id="v-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="v-brand">Brand</label>
+          <select id="v-brand" name="brand" required>
+            <option value="" selected disabled>Choose</option>
+<!-- BRANDOPTIONS:BEGIN -->
+            <option>Anthem</option>
+            <option>Arcam</option>
+            <option>Audio Research</option>
+            <option>Classé</option>
+            <option>Denon / Marantz</option>
+            <option>Krell</option>
+            <option>Lyngdorf</option>
+            <option>Mark Levinson</option>
+            <option>Meridian</option>
+            <option>NAD</option>
+            <option>Onkyo / Integra</option>
+            <option>Primare</option>
+            <option>Rotel / Michi</option>
+            <option>Trinnov / JBL Synthesis</option>
+            <option>Yamaha</option>
+<!-- BRANDOPTIONS:END -->
+          </select>
+        </div>
+        <div class="field">
+          <label for="v-model">Model</label>
+          <input id="v-model" name="model" type="text" autocomplete="off" placeholder="e.g. TDAI-3400">
+        </div>
+      </div>
+      <div class="field">
+        <label for="v-country">Country</label>
+        <select id="v-country" name="country" required>
+          <option value="" selected disabled>Choose</option>
+          <option>United States</option>
+          <option>Canada</option>
+          <option>United Kingdom</option>
+          <option>Germany</option>
+          <option>Sweden</option>
+          <option>Norway</option>
+          <option>Denmark</option>
+          <option>Finland</option>
+          <option>Netherlands</option>
+          <option>Switzerland</option>
+          <option>Australia</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <input type="hidden" name="_subject" value="Link test volunteer">
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+      <div class="msg" id="v-msgbox" role="status" aria-live="polite"></div>
+      <div>
+        <button class="btn btn-green" id="v-send" type="submit">Volunteer</button>
+      </div>
+      <p class="note">Used only to reply to you. <a class="textlink" href="privacy.html">Privacy</a>.</p>
+    </form>
+    <div class="done" id="v-done" tabindex="-1" style="margin:32px 0">
+      <p class="legend">Thank you</p>
+      <h2>We will be in touch.</h2>
     </div>
+    <div style="height:36px"></div>
 
     <!-- BRANDS:BEGIN -->
 <dl class="models">
