@@ -55,7 +55,7 @@
       <h1>Reserve a Link.</h1>
       <p class="lede">No payment now, and nothing binding. We email you when your Link is ready to ship; you confirm then, or cancel at no cost.</p>
       <p class="price" data-price>Price announced at launch</p>
-      <p class="note">In the box: Link, one 3.5 mm control cable and one USB‑C cable. Shipping confirmed by email.</p>
+      <p class="note">In the box: Link, one control cable of your choice and one USB‑C cable. Shipping confirmed by email.</p>
 
       <form class="form" id="preorder" method="POST" action="#" novalidate data-relay data-subject="Link pre-order" data-msg="f-msgbox" data-done="f-done" data-send="f-send">
         <div class="row2">
@@ -127,6 +127,15 @@
   <option value="McIntosh MVP901">
 <!-- MODELLIST:END -->
           </datalist>
+        </div>
+        <div class="field">
+          <label for="f-cable">Control cable</label>
+          <select id="f-cable" name="cable" required>
+            <option value="" selected disabled>Choose</option>
+            <option>3.5 mm to 3.5 mm (most models)</option>
+            <option>3.5 mm to DB9 (C48, C50, C2500, MEN220, MVP players)</option>
+            <option>3.5 mm to DB9 for a B&amp;W DB1 subwoofer</option>
+          </select>
         </div>
         <div class="field">
           <label for="f-msg">Anything else</label>
