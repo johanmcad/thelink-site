@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://thelinkremote.com/sitemap.xml
+Sitemap: https://linkhifi.com/sitemap.xml

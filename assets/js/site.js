@@ -54,7 +54,7 @@
           availability: "https://schema.org/PreOrder",
           price: String(price.amount),
           priceCurrency: price.currency || "USD",
-          url: "https://thelinkremote.com/preorder.html",
+          url: "https://linkhifi.com/preorder.html",
         };
         ld.textContent = JSON.stringify(d);
       } catch (e) { /* leave the static document alone */ }
