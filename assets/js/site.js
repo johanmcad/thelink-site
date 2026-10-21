@@ -51,17 +51,81 @@
         var d = JSON.parse(ld.textContent);
         d.offers = {
           "@type": "Offer",
-          availability: "https://schema.org/PreOrder",
+          availability: "https://schema.org/InStock",
           price: String(price.amount),
           priceCurrency: price.currency || "USD",
-          url: "https://linkhifi.com/preorder.html",
+          url: "https://linkhifi.com/order.html",
         };
         ld.textContent = JSON.stringify(d);
       } catch (e) { /* leave the static document alone */ }
     }
   }
 
-  // ---- forms (pre-order, test volunteer): one relay, one fallback
+  // ---- the shipping calculator (order page)
+  // Reads the country and quantity fields, looks the country up in
+  // config.js SHIPPING.zones and writes price × quantity + shipping = total
+  // into #f-sum. A country in no zone gets words, not a number. The total
+  // also rides along in the hidden "total" field so the order email carries
+  // exactly what the customer saw.
+  var money = function (n) {
+    try {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: price.currency || "USD", maximumFractionDigits: 0 }).format(n);
+    } catch (e) { return n + " " + (price.currency || "USD"); }
+  };
+  var ship = cfg.SHIPPING || {};
+  var zones = ship.zones || [];
+  function zoneFor(code) {
+    for (var z = 0; z < zones.length; z++) {
+      var c = zones[z].countries || [];
+      for (var k = 0; k < c.length; k++) if (c[k] === code) return zones[z];
+    }
+    return null;
+  }
+  var sumEl = document.getElementById("f-sum");
+  var totalEl = document.getElementById("f-total");
+  var countryEl = document.getElementById("f-country");
+  var qtyEl = document.getElementById("f-qty");
+  var lastTotal = "";
+  function totalText() { return lastTotal; }
+  function paint() {
+    if (!sumEl || !hasPrice) return;
+    var code = countryEl ? countryEl.value : "";
+    var qty = Math.max(1, Math.min(5, parseInt(qtyEl && qtyEl.value, 10) || 1));
+    var goods = price.amount * qty;
+    var rows = '<div class="r"><span>Link × ' + qty + '</span><span>' + money(goods) + '</span></div>';
+    var zone = code ? zoneFor(code) : null;
+    var shipTxt;
+    if (zone && typeof zone.first === "number") {
+      var cost = zone.first + Math.max(0, qty - 1) * (typeof zone.extra === "number" ? zone.extra : zone.first);
+      shipTxt = cost === 0 ? "Free" : money(cost);
+      rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>' + shipTxt + '</span></div>';
+      rows += '<div class="r t"><span>Total</span><span>' + money(goods + cost) + '</span></div>';
+      lastTotal = money(goods + cost) + " incl. " + (cost === 0 ? "free shipping" : money(cost) + " shipping") + (zone.name ? " (" + zone.name + ")" : "");
+    } else {
+      rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>' + (code ? "confirmed by email" : "choose a country") + '</span></div>';
+      rows += '<div class="r t"><span>Total</span><span>' + money(goods) + ' + shipping</span></div>';
+      lastTotal = money(goods) + " + shipping (not calculated)";
+    }
+    rows += '<div class="n">' + (zone && zone.note ? zone.note : "Any import duties or taxes in your country are not included.") + '</div>';
+    sumEl.innerHTML = rows;
+    sumEl.className = "sum show";
+    if (totalEl) totalEl.value = lastTotal;
+  }
+  if (sumEl) {
+    if (countryEl) countryEl.addEventListener("change", paint);
+    if (qtyEl) { qtyEl.addEventListener("input", paint); qtyEl.addEventListener("change", paint); }
+    paint();
+  }
+
+  // ---- hosted checkout: one link from config.js, shown only when it exists
+  var checkout = String(cfg.CHECKOUT_URL || "").trim();
+  var payEls = document.querySelectorAll("[data-checkout]");
+  for (var c = 0; c < payEls.length; c++) {
+    if (checkout) { payEls[c].href = checkout; payEls[c].hidden = false; }
+    else payEls[c].hidden = true;
+  }
+
+  // ---- forms (order, test volunteer): one relay, one fallback
   // A form carries data-relay plus the ids of its message box, success plate
   // and send button, and data-subject for the email. With a Formspree id it
   // posts there; without one it opens the visitor's email app, fields filled in.
@@ -86,7 +150,7 @@
         if (k.charAt(0) === "_") return;
         if (String(v).trim()) lines.push(k + ": " + v);
       });
-      if (hasPrice && form.id === "preorder") lines.push("price shown: " + priceText);
+      if (hasPrice && form.id === "order") lines.push("total shown: " + (totalText() || priceText + " + shipping"));
       return "mailto:" + contact + "?subject=" + encodeURIComponent(subject) +
         "&body=" + encodeURIComponent(lines.join("\n"));
     }

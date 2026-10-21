@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Order Link</title>
+<meta name="description" content="Order a Link for $199 plus shipping. Choose your country to see the shipping cost; we confirm your order by email.">
+<link rel="canonical" href="https://linkhifi.com/order.html">
+<meta name="theme-color" content="#060607">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Link">
+<meta property="og:title" content="Order Link">
+<meta property="og:description" content="Order a Link. $199 plus shipping.">
+<meta property="og:url" content="https://linkhifi.com/order.html">
+<meta property="og:image" content="https://linkhifi.com/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="assets/fonts/jost-latin-400-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/config.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script type="application/ld+json" id="ld-product">
+{"@context":"https://schema.org","@type":"Product","name":"Link","brand":{"@type":"Brand","name":"Link"},"manufacturer":{"@type":"Organization","name":"Play and Track AB","email":"info@playandtrack.com","address":{"@type":"PostalAddress","addressCountry":"SE"}},"description":"A wireless remote control box for hi-fi preamplifiers with an RS-232 control port.","image":"https://linkhifi.com/assets/img/link-top-1200.jpg","url":"https://linkhifi.com/order.html"}
+</script>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Link, home"><img src="assets/brand/thelink-logo.svg" alt="" width="94" height="24"></a>
+    <nav class="nav" id="nav" aria-label="Site">
+      <a href="compatibility.html">Compatibility</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <a class="btn btn-green btn-small" href="order.html">Order</a>
+    <button class="menu" id="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg class="bars" viewBox="0 0 18 18" aria-hidden="true"><path d="M1 4h16M1 9h16M1 14h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <svg class="x" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<section class="sec">
+  <div class="wrap split">
+    <div>
+      <p class="legend">Order</p>
+      <h1>Order a Link.</h1>
+      <p class="price" data-price>Price announced at launch</p>
+      <p class="lede">Plus shipping. Choose your country below and the total is shown before you order. We confirm by email with payment details, and ship from Sweden.</p>
+      <p class="note">In the box: Link, one control cable of your choice and one USB‑C cable.</p>
+
+      <form class="form" id="order" method="POST" action="#" novalidate data-relay data-subject="Link order" data-msg="f-msgbox" data-done="f-done" data-send="f-send">
+        <div class="row2">
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="f-country">Country</label>
+            <select id="f-country" name="country" required>
+              <option value="" selected disabled>Choose</option>
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="GB">United Kingdom</option>
+              <option value="IE">Ireland</option>
+              <option value="DE">Germany</option>
+              <option value="AT">Austria</option>
+              <option value="CH">Switzerland</option>
+              <option value="FR">France</option>
+              <option value="BE">Belgium</option>
+              <option value="NL">Netherlands</option>
+              <option value="LU">Luxembourg</option>
+              <option value="IT">Italy</option>
+              <option value="ES">Spain</option>
+              <option value="PT">Portugal</option>
+              <option value="SE">Sweden</option>
+              <option value="NO">Norway</option>
+              <option value="DK">Denmark</option>
+              <option value="FI">Finland</option>
+              <option value="IS">Iceland</option>
+              <option value="PL">Poland</option>
+              <option value="CZ">Czechia</option>
+              <option value="AU">Australia</option>
+              <option value="NZ">New Zealand</option>
+              <option value="JP">Japan</option>
+              <option value="KR">South Korea</option>
+              <option value="SG">Singapore</option>
+              <option value="HK">Hong Kong</option>
+              <option value="AE">United Arab Emirates</option>
+              <option value="XX">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-qty">Quantity</label>
+            <input id="f-qty" name="quantity" type="number" min="1" max="5" value="1" inputmode="numeric" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-preamp">Your preamplifier</label>
+          <input id="f-preamp" name="preamp" type="text" list="models" autocomplete="off" placeholder="e.g. McIntosh C2700">
+          <datalist id="models">
+<!-- MODELLIST:BEGIN -->
+  <option value="McIntosh C47">
+  <option value="McIntosh C48">
+  <option value="McIntosh C49">
+  <option value="McIntosh C50">
+  <option value="McIntosh C52">
+  <option value="McIntosh C53">
+  <option value="McIntosh C55">
+  <option value="McIntosh C1100">
+  <option value="McIntosh C2500">
+  <option value="McIntosh C2600">
+  <option value="McIntosh C2700">
+  <option value="McIntosh C2800">
+  <option value="McIntosh C12000">
+  <option value="McIntosh MA352">
+  <option value="McIntosh MA5300">
+  <option value="McIntosh MA7200">
+  <option value="McIntosh MA8900">
+  <option value="McIntosh MA8950">
+  <option value="McIntosh MA9000">
+  <option value="McIntosh MA9500">
+  <option value="McIntosh MA12000">
+  <option value="McIntosh MHT300">
+  <option value="McIntosh MX100">
+  <option value="McIntosh MX200">
+  <option value="McIntosh D1100">
+  <option value="McIntosh MVP861">
+  <option value="McIntosh MVP871">
+  <option value="McIntosh MVP901">
+<!-- MODELLIST:END -->
+          </datalist>
+        </div>
+        <div class="field">
+          <label for="f-cable">Control cable</label>
+          <select id="f-cable" name="cable" required>
+            <option value="" selected disabled>Choose</option>
+            <option>3.5 mm to 3.5 mm (most models)</option>
+            <option>3.5 mm to DB9 (C48, C50, C2500, MEN220, MVP players)</option>
+            <option>3.5 mm to DB9 for a B&amp;W DB1 subwoofer</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-msg">Anything else</label>
+          <textarea id="f-msg" name="message" placeholder="Subwoofers, room correction, a second preamplifier, questions…"></textarea>
+        </div>
+        <div class="sum" id="f-sum" aria-live="polite"></div>
+        <input type="hidden" name="_subject" value="Link order">
+        <input type="hidden" name="total" id="f-total" value="">
+        <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+        <div class="msg" id="f-msgbox" role="status" aria-live="polite"></div>
+        <div>
+          <button class="btn btn-green" id="f-send" type="submit">Order</button>
+          <a class="btn btn-small" data-checkout href="#" hidden target="_blank" rel="noopener" style="margin-left:10px">Pay now by card</a>
+        </div>
+        <p class="note">Used only to reply to you. <a class="textlink" href="privacy.html">Privacy</a>.</p>
+      </form>
+
+      <div class="done" id="f-done" tabindex="-1">
+        <p class="legend">Ordered</p>
+        <h2>Thank you.</h2>
+        <p class="muted" style="margin-top:14px">We confirm your order by email, with the shipping cost and how to pay. Nothing is charged until then.</p>
+      </div>
+    </div>
+
+    <figure class="figure photo">
+      <picture>
+        <source type="image/webp" srcset="assets/img/link-hand-480.webp 480w, assets/img/link-hand-800.webp 800w, assets/img/link-hand-1200.webp 1200w, assets/img/link-hand-1600.webp 1600w, assets/img/link-hand-2000.webp 2000w" sizes="(min-width: 820px) 520px, 100vw">
+        <img src="assets/img/link-hand-800.jpg" srcset="assets/img/link-hand-480.jpg 480w, assets/img/link-hand-800.jpg 800w, assets/img/link-hand-1200.jpg 1200w, assets/img/link-hand-1600.jpg 1600w, assets/img/link-hand-2000.jpg 2000w" sizes="(min-width: 820px) 520px, 100vw" width="800" height="617" alt="Link held in one hand, a hi-fi rack out of focus behind it" loading="lazy" decoding="async">
+      </picture>
+    </figure>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="co"><b>Play and Track AB</b><br>Sweden · <a href="mailto:info@playandtrack.com">info@playandtrack.com</a></div>
+    <nav aria-label="Footer">
+      <a href="compatibility.html">Compatibility</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="support.html">Support</a>
+      <a href="order.html">Order</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <p class="disc">Link is an independent product from Play and Track AB. It is not affiliated with, endorsed by, or produced by McIntosh Laboratory, Inc. or any other manufacturer named above; their names are used only to state, factually, which models Link is compatible with.</p>
+  </div>
+</footer>
+
+</body>
+</html>
