@@ -54,7 +54,7 @@
       <p class="legend">Order</p>
       <h1>Order a Link.</h1>
       <p class="price" data-price>Price announced at launch</p>
-      <p class="lede">Plus shipping. Choose your country below and the total is shown before you order. We confirm by email with payment details, and ship from Sweden.</p>
+      <p class="lede">Plus shipping. Choose your country below and the total is shown before you order. <span class="no-checkout">We confirm by email with payment details, and ship from Sweden.</span><span class="only-checkout">Pay by card on a secure page, or order by email. We ship from Sweden.</span></p>
       <p class="note">In the box: Link, one control cable of your choice and one USB‑C cable.</p>
 
       <form class="form" id="order" method="POST" action="#" novalidate data-relay data-subject="Link order" data-msg="f-msgbox" data-done="f-done" data-send="f-send">
@@ -164,9 +164,10 @@
         <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
         <div class="msg" id="f-msgbox" role="status" aria-live="polite"></div>
         <div>
+          <a class="btn btn-green" data-checkout href="#" hidden rel="noopener">Pay by card</a>
           <button class="btn btn-green" id="f-send" type="submit">Order</button>
-          <a class="btn btn-small" data-checkout href="#" hidden target="_blank" rel="noopener" style="margin-left:10px">Pay now by card</a>
         </div>
+        <p class="note only-checkout">Card, Apple Pay, Google Pay or Klarna on a secure Stripe page, shipping included. Or send the form and we invoice you by email.</p>
         <p class="note">Used only to reply to you. <a class="textlink" href="privacy.html">Privacy</a>.</p>
       </form>
 

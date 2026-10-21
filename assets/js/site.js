@@ -118,12 +118,25 @@
   }
 
   // ---- hosted checkout: one link from config.js, shown only when it exists
+  // With a Stripe Payment Link in config.js, "Pay by card" is the main
+  // button and the form becomes "order by email instead". The customer's
+  // email and quantity are handed to Stripe's page (prefilled_email is a
+  // documented Payment Link parameter; quantity is adjustable there).
   var checkout = String(cfg.CHECKOUT_URL || "").trim();
   var payEls = document.querySelectorAll("[data-checkout]");
   for (var c = 0; c < payEls.length; c++) {
-    if (checkout) { payEls[c].href = checkout; payEls[c].hidden = false; }
-    else payEls[c].hidden = true;
+    if (checkout) {
+      payEls[c].href = checkout;
+      payEls[c].hidden = false;
+      payEls[c].addEventListener("click", function () {
+        var em = document.getElementById("f-email");
+        var v = em && em.value && em.validity.valid ? em.value.trim() : "";
+        this.href = checkout + (checkout.indexOf("?") < 0 ? "?" : "&") +
+          "locale=auto" + (v ? "&prefilled_email=" + encodeURIComponent(v) : "");
+      });
+    } else payEls[c].hidden = true;
   }
+  if (checkout) document.documentElement.classList.add("has-checkout");
 
   // ---- forms (order, test volunteer): one relay, one fallback
   // A form carries data-relay plus the ids of its message box, success plate
