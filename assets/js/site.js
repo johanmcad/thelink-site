@@ -27,21 +27,32 @@
   }
 
   // ---- price
-  var price = cfg.PRICE || {};
-  var hasPrice = Number(price.amount) > 0;
+  // PRICE is the list price; INTRO, when set below it, is what the customer
+  // pays today and the pages show both: the intro price, the list price
+  // struck through, and the offer's label. price.amount below is always the
+  // amount CHARGED, which the calculator and the structured data use.
+  var list = cfg.PRICE || {};
+  var intro = cfg.INTRO || {};
+  var cur = list.currency || "USD";
+  var fmt = function (n) {
+    try {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(n);
+    } catch (e) { return n + " " + cur; }
+  };
+  var hasPrice = Number(list.amount) > 0;
+  var hasIntro = hasPrice && Number(intro.amount) > 0 && Number(intro.amount) < Number(list.amount);
+  var price = { amount: hasIntro ? Number(intro.amount) : Number(list.amount), currency: cur };
   var priceText = "";
   if (hasPrice) {
-    try {
-      priceText = new Intl.NumberFormat("en-US", {
-        style: "currency", currency: price.currency || "USD", maximumFractionDigits: 0,
-      }).format(price.amount);
-    } catch (e) {
-      priceText = price.amount + " " + (price.currency || "USD");
-    }
+    priceText = fmt(price.amount);
     var els = document.querySelectorAll("[data-price]");
     for (var i = 0; i < els.length; i++) {
       els[i].textContent = priceText;
-      els[i].insertAdjacentHTML("beforeend", "<small>" + (price.currency || "USD") + "</small>");
+      els[i].insertAdjacentHTML("beforeend", "<small>" + cur + "</small>");
+      if (hasIntro) {
+        els[i].insertAdjacentHTML("beforeend", ' <s class="was" aria-label="list price ' + fmt(list.amount) + '">' + fmt(list.amount) + "</s>");
+        els[i].insertAdjacentHTML("afterend", '<p class="intro">' + (intro.label || "Introductory price") + "</p>");
+      }
     }
     // Structured data carries an Offer only once there is a real price: a
     // placeholder of 0 would be a false claim to a search engine.
@@ -67,11 +78,7 @@
   // into #f-sum. A country in no zone gets words, not a number. The total
   // also rides along in the hidden "total" field so the order email carries
   // exactly what the customer saw.
-  var money = function (n) {
-    try {
-      return new Intl.NumberFormat("en-US", { style: "currency", currency: price.currency || "USD", maximumFractionDigits: 0 }).format(n);
-    } catch (e) { return n + " " + (price.currency || "USD"); }
-  };
+  var money = fmt;
   var ship = cfg.SHIPPING || {};
   var zones = ship.zones || [];
   function zoneFor(code) {

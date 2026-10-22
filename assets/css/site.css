@@ -327,6 +327,8 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 }
 .price { font-size: clamp(1.9rem, 1.4rem + 2.5vw, 3rem); line-height: 1; }
 .price small { font-size: 0.5em; color: var(--txt3); margin-left: 0.4em; letter-spacing: 0.04em; }
+.price .was { font-size: 0.5em; color: var(--txt3); margin-left: 0.6em; text-decoration-thickness: 1px; }
+.intro { color: var(--green); font-size: var(--fs-legend); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; margin: 4px 0 0; }
 @media (min-width: 760px) {
   .band { grid-template-columns: 1fr auto; align-items: center; }
 }
