@@ -102,7 +102,11 @@
     var rows = '<div class="r"><span>Link × ' + qty + '</span><span>' + money(goods) + '</span></div>';
     var zone = code ? zoneFor(code) : null;
     var shipTxt;
-    if (zone && typeof zone.first === "number") {
+    if (ship.included) {
+      rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>Included</span></div>';
+      rows += '<div class="r t"><span>Total</span><span>' + money(goods) + '</span></div>';
+      lastTotal = money(goods) + " incl. shipping";
+    } else if (zone && typeof zone.first === "number") {
       var cost = zone.first + Math.max(0, qty - 1) * (typeof zone.extra === "number" ? zone.extra : zone.first);
       shipTxt = cost === 0 ? "Free" : money(cost);
       rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>' + shipTxt + '</span></div>';

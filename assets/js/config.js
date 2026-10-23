@@ -10,11 +10,13 @@
 //   with the list price struck through and INTRO.label beside it, and the
 //   calculator and structured data use it. amount 0 = no offer, list price only.
 //   The Stripe Payment Link must carry the same price as the pages.
-// SHIPPING: the shipping calculator on the order page. Each zone lists ISO
-//   country codes (the values of the country select in order.html; "XX" is
-//   "Other"), the cost of the first unit and of each further unit, in PRICE's
-//   currency. A country in no zone, or an empty list, shows "shipping
-//   confirmed by email" instead of a number — never a guess.
+// SHIPPING: the shipping calculator on the order page. included: true =
+//   shipping is in the price (Johan 2026-10-23): the summary says "Included"
+//   and the pages say so; zones are then ignored. Otherwise each zone lists
+//   ISO country codes (the values of the country select in order.html; "XX"
+//   is "Other"), the cost of the first unit and of each further unit, in
+//   PRICE's currency. A country in no zone, or an empty list, shows
+//   "shipping confirmed by email" instead of a number - never a guess.
 // CHECKOUT_URL: a hosted checkout (e.g. a Stripe Payment Link). While it is
 //   empty the order form is the order channel and the confirmation email
 //   carries the payment details. Once set, the order page offers "Pay now"
@@ -25,6 +27,7 @@ window.SITE = {
   PRICE: { amount: 299, currency: "USD" },
   INTRO: { amount: 249, label: "Introductory price" },
   SHIPPING: {
+    included: true,
     from: "Sweden",
     zones: [
       // { name: "Sweden",        countries: ["SE"],                                   first: 0,  extra: 0 },
@@ -34,6 +37,6 @@ window.SITE = {
       // { name: "Rest of world", countries: ["AU", "NZ", "JP", "KR", "SG", "HK", "AE", "XX"], first: 0, extra: 0 },
     ],
   },
-  CHECKOUT_URL: "",
+  CHECKOUT_URL: "https://buy.stripe.com/7sYdR80so2Q193AfCu2sM00",
   CONTACT: "info@playandtrack.com",
 };
