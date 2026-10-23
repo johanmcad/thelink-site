@@ -461,21 +461,6 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 .row2 { display: grid; gap: 18px; }
 @media (min-width: 480px) { .row2 { grid-template-columns: 1fr 1fr; } }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-/* with CHECKOUT_URL set (<html class="has-checkout">) "Pay by card" leads
-   and the form's own button steps back to a plain outline */
-.only-checkout { display: none; }
-.has-checkout .only-checkout { display: inline; }
-p.only-checkout { display: none; }
-.has-checkout p.only-checkout { display: block; }
-.has-checkout .no-checkout { display: none; }
-.has-checkout #f-send { background: transparent; color: var(--txt); border: 1px solid var(--brd3); margin-left: 10px; }
-.has-checkout #f-send:hover { border-color: var(--txt3); }
-/* the order summary: price × quantity + shipping = total, from config.js */
-.sum { display: none; border: 1px solid var(--brd3); border-radius: var(--radius-s); background: var(--surf1); padding: 14px 18px; }
-.sum.show { display: block; }
-.sum .r { display: flex; justify-content: space-between; gap: 16px; padding: 5px 0; color: var(--txt2); }
-.sum .r.t { border-top: 1px solid var(--brd3); margin-top: 6px; padding-top: 11px; color: var(--txt); font-weight: 600; }
-.sum .n { color: var(--dim); font-size: var(--fs-small); margin-top: 8px; }
 .note { color: var(--dim); font-size: var(--fs-small); }
 .msg { display: none; border-radius: var(--radius-s); padding: 16px 18px; border: 1px solid var(--brd3); background: var(--tintGreen); }
 .msg.show { display: block; }

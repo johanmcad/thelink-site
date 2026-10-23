@@ -72,84 +72,23 @@
     }
   }
 
-  // ---- the shipping calculator (order page)
-  // Reads the country and quantity fields, looks the country up in
-  // config.js SHIPPING.zones and writes price × quantity + shipping = total
-  // into #f-sum. A country in no zone gets words, not a number. The total
-  // also rides along in the hidden "total" field so the order email carries
-  // exactly what the customer saw.
-  var money = fmt;
-  var ship = cfg.SHIPPING || {};
-  var zones = ship.zones || [];
-  function zoneFor(code) {
-    for (var z = 0; z < zones.length; z++) {
-      var c = zones[z].countries || [];
-      for (var k = 0; k < c.length; k++) if (c[k] === code) return zones[z];
-    }
-    return null;
-  }
-  var sumEl = document.getElementById("f-sum");
-  var totalEl = document.getElementById("f-total");
-  var countryEl = document.getElementById("f-country");
-  var qtyEl = document.getElementById("f-qty");
-  var lastTotal = "";
-  function totalText() { return lastTotal; }
-  function paint() {
-    if (!sumEl || !hasPrice) return;
-    var code = countryEl ? countryEl.value : "";
-    var qty = Math.max(1, Math.min(5, parseInt(qtyEl && qtyEl.value, 10) || 1));
-    var goods = price.amount * qty;
-    var rows = '<div class="r"><span>Link × ' + qty + '</span><span>' + money(goods) + '</span></div>';
-    var zone = code ? zoneFor(code) : null;
-    var shipTxt;
-    if (ship.included) {
-      rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>Included</span></div>';
-      rows += '<div class="r t"><span>Total</span><span>' + money(goods) + '</span></div>';
-      lastTotal = money(goods) + " incl. shipping";
-    } else if (zone && typeof zone.first === "number") {
-      var cost = zone.first + Math.max(0, qty - 1) * (typeof zone.extra === "number" ? zone.extra : zone.first);
-      shipTxt = cost === 0 ? "Free" : money(cost);
-      rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>' + shipTxt + '</span></div>';
-      rows += '<div class="r t"><span>Total</span><span>' + money(goods + cost) + '</span></div>';
-      lastTotal = money(goods + cost) + " incl. " + (cost === 0 ? "free shipping" : money(cost) + " shipping") + (zone.name ? " (" + zone.name + ")" : "");
-    } else {
-      rows += '<div class="r"><span>Shipping' + (ship.from ? " from " + ship.from : "") + '</span><span>' + (code ? "confirmed by email" : "choose a country") + '</span></div>';
-      rows += '<div class="r t"><span>Total</span><span>' + money(goods) + ' + shipping</span></div>';
-      lastTotal = money(goods) + " + shipping (not calculated)";
-    }
-    rows += '<div class="n">' + (zone && zone.note ? zone.note : "Any import duties or taxes in your country are not included.") + '</div>';
-    sumEl.innerHTML = rows;
-    sumEl.className = "sum show";
-    if (totalEl) totalEl.value = lastTotal;
-  }
-  if (sumEl) {
-    if (countryEl) countryEl.addEventListener("change", paint);
-    if (qtyEl) { qtyEl.addEventListener("input", paint); qtyEl.addEventListener("change", paint); }
-    paint();
-  }
-
-  // ---- hosted checkout: one link from config.js, shown only when it exists
-  // With a Stripe Payment Link in config.js, "Pay by card" is the main
-  // button and the form becomes "order by email instead". The customer's
-  // email and quantity are handed to Stripe's page (prefilled_email is a
-  // documented Payment Link parameter; quantity is adjustable there).
+  // ---- the order button (order page): a Stripe Payment Link from config.js.
+  // With no link configured it stays the mailto in the HTML, so an order can
+  // still be placed by email. The customer's quantity is adjustable on the
+  // Stripe page. ?paid=1 is the return address after a successful payment.
   var checkout = String(cfg.CHECKOUT_URL || "").trim();
   var payEls = document.querySelectorAll("[data-checkout]");
   for (var c = 0; c < payEls.length; c++) {
-    if (checkout) {
-      payEls[c].href = checkout;
-      payEls[c].hidden = false;
-      payEls[c].addEventListener("click", function () {
-        var em = document.getElementById("f-email");
-        var v = em && em.value && em.validity.valid ? em.value.trim() : "";
-        this.href = checkout + (checkout.indexOf("?") < 0 ? "?" : "&") +
-          "locale=auto" + (v ? "&prefilled_email=" + encodeURIComponent(v) : "");
-      });
-    } else payEls[c].hidden = true;
+    if (checkout) payEls[c].href = checkout + (checkout.indexOf("?") < 0 ? "?" : "&") + "locale=auto";
   }
   if (checkout) document.documentElement.classList.add("has-checkout");
+  var paid = document.getElementById("paid");
+  if (paid && /[?&]paid=1\b/.test(location.search)) {
+    paid.classList.add("show");
+    paid.focus();
+  }
 
-  // ---- forms (order, test volunteer): one relay, one fallback
+  // ---- forms (test volunteer on the compatibility page): one relay, one fallback
   // A form carries data-relay plus the ids of its message box, success plate
   // and send button, and data-subject for the email. With a Formspree id it
   // posts there; without one it opens the visitor's email app, fields filled in.
@@ -174,7 +113,6 @@
         if (k.charAt(0) === "_") return;
         if (String(v).trim()) lines.push(k + ": " + v);
       });
-      if (hasPrice && form.id === "order") lines.push("total shown: " + (totalText() || priceText + " + shipping"));
       return "mailto:" + contact + "?subject=" + encodeURIComponent(subject) +
         "&body=" + encodeURIComponent(lines.join("\n"));
     }

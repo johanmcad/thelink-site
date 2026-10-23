@@ -10,33 +10,18 @@
 //   with the list price struck through and INTRO.label beside it, and the
 //   calculator and structured data use it. amount 0 = no offer, list price only.
 //   The Stripe Payment Link must carry the same price as the pages.
-// SHIPPING: the shipping calculator on the order page. included: true =
-//   shipping is in the price (Johan 2026-10-23): the summary says "Included"
-//   and the pages say so; zones are then ignored. Otherwise each zone lists
-//   ISO country codes (the values of the country select in order.html; "XX"
-//   is "Other"), the cost of the first unit and of each further unit, in
-//   PRICE's currency. A country in no zone, or an empty list, shows
-//   "shipping confirmed by email" instead of a number - never a guess.
-// CHECKOUT_URL: a hosted checkout (e.g. a Stripe Payment Link). While it is
-//   empty the order form is the order channel and the confirmation email
-//   carries the payment details. Once set, the order page offers "Pay now"
-//   beside the form.
+// SHIPPING: included: true = the pages say shipping is in the price (Johan
+//   2026-10-23). The Stripe Payment Link must agree (no shipping rates there).
+// CHECKOUT_URL: the Stripe Payment Link the order page's ORDER button opens.
+//   Empty = the button falls back to an email to CONTACT. The link carries
+//   the price, quantity, cable choice and shipping address; the site shows
+//   nothing it does not.
 // CONTACT: where the fallback email goes and what the pages print.
 window.SITE = {
   FORMSPREE_ID: "",
   PRICE: { amount: 299, currency: "USD" },
   INTRO: { amount: 249, label: "Introductory price" },
-  SHIPPING: {
-    included: true,
-    from: "Sweden",
-    zones: [
-      // { name: "Sweden",        countries: ["SE"],                                   first: 0,  extra: 0 },
-      // { name: "Nordics",       countries: ["NO", "DK", "FI", "IS"],                 first: 0,  extra: 0 },
-      // { name: "Europe",        countries: ["GB", "IE", "DE", "AT", "CH", "FR", "BE", "NL", "LU", "IT", "ES", "PT", "PL", "CZ"], first: 0, extra: 0 },
-      // { name: "North America", countries: ["US", "CA"],                             first: 0,  extra: 0 },
-      // { name: "Rest of world", countries: ["AU", "NZ", "JP", "KR", "SG", "HK", "AE", "XX"], first: 0, extra: 0 },
-    ],
-  },
+  SHIPPING: { included: true, from: "Sweden" },
   CHECKOUT_URL: "https://buy.stripe.com/7sYdR80so2Q193AfCu2sM00",
   CONTACT: "info@playandtrack.com",
 };
