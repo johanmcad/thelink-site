@@ -284,6 +284,17 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 
 /* rear panel callouts: three columns under the render, one per thing on the back */
 .callouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+/* under the rear view: the same width as the photo, each label under its
+   control - the jacks run 14-48% of the picture, the USB-C sits at 52-62%,
+   the light and the button at 66-77% */
+.callouts.under { max-width: 800px; margin-left: auto; margin-right: auto; grid-template-columns: 44% 22% 34%; gap: 0; column-gap: 0; }
+.callouts.under .co:nth-child(1) { padding-left: 32%; }
+.callouts.under .co:nth-child(2) { text-align: center; }
+.callouts.under .co:nth-child(3) { padding-left: 1%; }
+@media (max-width: 600px) {
+  .callouts.under { grid-template-columns: 1fr; gap: 10px; }
+  .callouts.under .co:nth-child(n) { padding-left: 0; text-align: left; }
+}
 .co { border-top: 1px solid var(--brd3); padding-top: 12px; }
 .co b { display: block; font-weight: 600; }
 .co span { color: var(--txt3); font-size: var(--fs-small); }
