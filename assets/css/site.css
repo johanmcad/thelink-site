@@ -256,6 +256,7 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 .center h2, .center .lede { margin-inline: auto; }
 
 .figure { margin: 0; }
+.figure.center img { display: block; margin: 0 auto; }
 .figure.photo img { border-radius: var(--radius); box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6); }
 .figure figcaption {
   margin-top: 18px;
