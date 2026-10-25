@@ -40,7 +40,10 @@
     } catch (e) { return n + " " + cur; }
   };
   var hasPrice = Number(list.amount) > 0;
-  var hasIntro = hasPrice && Number(intro.amount) > 0 && Number(intro.amount) < Number(list.amount);
+  var units = Number(intro.units) || 0;
+  var left = units > 0 ? Math.max(0, units - (Number(intro.sold) || 0)) : -1;
+  // An offer for the first N units ends by itself when they are gone.
+  var hasIntro = hasPrice && Number(intro.amount) > 0 && Number(intro.amount) < Number(list.amount) && left !== 0;
   var price = { amount: hasIntro ? Number(intro.amount) : Number(list.amount), currency: cur };
   var priceText = "";
   if (hasPrice) {
@@ -51,7 +54,9 @@
       els[i].insertAdjacentHTML("beforeend", "<small>" + cur + "</small>");
       if (hasIntro) {
         els[i].insertAdjacentHTML("beforeend", ' <s class="was" aria-label="list price ' + fmt(list.amount) + '">' + fmt(list.amount) + "</s>");
-        els[i].insertAdjacentHTML("afterend", '<p class="intro">' + (intro.label || "Introductory price") + "</p>");
+        var label = intro.label || "Introductory price";
+        if (left > 0) label += " \u00b7 " + left + " of the first " + units + " left";
+        els[i].insertAdjacentHTML("afterend", '<p class="intro">' + label + "</p>" + (left > 0 ? '<p class="muted getnow">Get yours now.</p>' : ""));
       }
     }
     // Structured data carries an Offer only once there is a real price: a
