@@ -359,7 +359,7 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
   margin: 0 0 12px;
 }
 .models dd { margin: 0 0 28px; display: flex; flex-wrap: wrap; gap: 8px; }
-.models dd span {
+.models dd span, .models dd a {
   border: 1px solid var(--brd3);
   background: var(--surf1);
   border-radius: 8px;
@@ -367,7 +367,7 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
   letter-spacing: 0.04em;
 }
 /* connector tag on a chip: DB9 models need an adapter cable */
-.models dd span small {
+.models dd span small, .models dd a small {
   margin-left: 8px;
   font-size: 0.6875rem;
   font-weight: 600;
@@ -375,8 +375,10 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
   color: var(--txt3);
   vertical-align: 1px;
 }
-.models dd span.db9 { border-color: var(--brd5); }
-.models dd span.unk small { color: var(--dim); }
+.models dd span.db9, .models dd a.db9 { border-color: var(--brd5); }
+.models dd span.unk small, .models dd a.unk small { color: var(--dim); }
+.models dd a { color: var(--txt1); text-decoration: none; }
+.models dd a:hover { border-color: var(--green); }
 
 .spec { width: 100%; border-collapse: collapse; margin-top: 28px; }
 .spec th, .spec td { padding: 14px 0; border-top: 1px solid var(--brd1); text-align: left; vertical-align: top; }
