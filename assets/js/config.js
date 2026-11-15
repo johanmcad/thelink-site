@@ -25,7 +25,7 @@
 window.SITE = {
   FORMSPREE_ID: "",
   PRICE: { amount: 299, currency: "USD" },
-  INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 12 },
+  INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 21 },
   SHIPPING: { included: true, from: "Sweden" },
   CHECKOUT_URL: "https://buy.stripe.com/7sYdR80so2Q193AfCu2sM00",
   CONTACT: "info@playandtrack.com",
