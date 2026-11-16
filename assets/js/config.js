@@ -34,7 +34,7 @@
 window.SITE = {
   FORMSPREE_ID: "",
   PRICE: { amount: 299, currency: "USD" },
-  INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 21 },
+  INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 23 },
   EUR: { list: 0, intro: 0 },   // off: Stripe Adaptive Pricing converts USD at checkout (2026-11-16)
   SEK: { list: 0, intro: 0 },   // off, as EUR
   LOCAL_NOTE: "Checkout shows the price in your local currency.",
