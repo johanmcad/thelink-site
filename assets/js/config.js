@@ -20,6 +20,8 @@
 //   site.js EURO_ZONES). The Stripe price must carry the SAME amounts as an
 //   EUR currency option, so checkout charges what the page showed. list 0 =
 //   no euro price, every visitor sees USD.
+// SEK: the same for visitors in Sweden (Europe/Stockholm), with a SEK
+//   currency option on the Stripe price. list 0 = Swedes see USD.
 // SHIPPING: included: true = the pages say shipping is in the price (Johan
 //   2026-10-23). The Stripe Payment Link must agree (no shipping rates there).
 // CHECKOUT_URL: the Stripe Payment Link the order page's ORDER button opens.
@@ -32,6 +34,7 @@ window.SITE = {
   PRICE: { amount: 299, currency: "USD" },
   INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 21 },
   EUR: { list: 279, intro: 229 },
+  SEK: { list: 2795, intro: 2295 },
   SHIPPING: { included: true, from: "Sweden" },
   CHECKOUT_URL: "https://buy.stripe.com/7sYdR80so2Q193AfCu2sM00",
   CONTACT: "info@playandtrack.com",

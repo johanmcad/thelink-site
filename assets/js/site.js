@@ -44,14 +44,22 @@
   var EURO_ZONES = /^(Europe\/(Vienna|Brussels|Nicosia|Famagusta|Tallinn|Helsinki|Mariehamn|Paris|Monaco|Berlin|Busingen|Athens|Dublin|Rome|Vatican|San_Marino|Riga|Vilnius|Luxembourg|Malta|Amsterdam|Lisbon|Bratislava|Ljubljana|Madrid|Zagreb|Sofia|Andorra|Podgorica)|Atlantic\/(Azores|Madeira|Canary)|Africa\/Ceuta|Indian\/Reunion|America\/(Martinique|Guadeloupe|Cayenne))$/;
   var tz = "";
   try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) { /* no Intl */ }
-  if (Number(eur.list) > 0 && (EURO_ZONES.test(tz) || /[?&]cur=eur\b/i.test(location.search))) {
-    list = { amount: Number(eur.list), currency: "EUR" };
-    intro = { amount: Number(eur.intro) || 0, label: intro.label, units: intro.units, sold: intro.sold };
+  var sek = cfg.SEK || {};
+  var force = (/[?&]cur=(eur|sek)\b/i.exec(location.search) || [])[1];
+  force = force ? force.toLowerCase() : "";
+  var local = null;
+  if (Number(sek.list) > 0 && (force === "sek" || (!force && tz === "Europe/Stockholm"))) local = { p: sek, c: "SEK" };
+  else if (Number(eur.list) > 0 && (force === "eur" || (!force && EURO_ZONES.test(tz)))) local = { p: eur, c: "EUR" };
+  if (local) {
+    list = { amount: Number(local.p.list), currency: local.c };
+    intro = { amount: Number(local.p.intro) || 0, label: intro.label, units: intro.units, sold: intro.sold };
   }
   var cur = list.currency || "USD";
+  // Kronor read the Swedish way ("2 295 kr"); the others as "$249" / "€229".
+  var fmtLocale = cur === "SEK" ? "sv-SE" : "en-US";
   var fmt = function (n) {
     try {
-      return new Intl.NumberFormat("en-US", { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(n);
+      return new Intl.NumberFormat(fmtLocale, { style: "currency", currency: cur, maximumFractionDigits: 0 }).format(n);
     } catch (e) { return n + " " + cur; }
   };
   var hasPrice = Number(list.amount) > 0;
@@ -66,7 +74,7 @@
     var els = document.querySelectorAll("[data-price]");
     for (var i = 0; i < els.length; i++) {
       els[i].textContent = priceText;
-      els[i].insertAdjacentHTML("beforeend", "<small>" + cur + "</small>");
+      if (cur !== "SEK") els[i].insertAdjacentHTML("beforeend", "<small>" + cur + "</small>");
       if (hasIntro) {
         els[i].insertAdjacentHTML("beforeend", ' <s class="was" aria-label="list price ' + fmt(list.amount) + '">' + fmt(list.amount) + "</s>");
         var label = intro.label || "Introductory price";
@@ -97,6 +105,10 @@
         if (Number(eur.list) > 0) {
           var eIntro = Number(eur.intro) || 0;
           d.offers.push(offer(hasIntro && eIntro > 0 && eIntro < Number(eur.list) ? eIntro : Number(eur.list), "EUR"));
+        }
+        if (Number(sek.list) > 0) {
+          var sIntro = Number(sek.intro) || 0;
+          d.offers.push(offer(hasIntro && sIntro > 0 && sIntro < Number(sek.list) ? sIntro : Number(sek.list), "SEK"));
         }
         ld.textContent = JSON.stringify(d);
       } catch (e) { /* leave the static document alone */ }
