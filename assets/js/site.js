@@ -82,6 +82,14 @@
         els[i].insertAdjacentHTML("afterend", '<p class="intro">' + label + "</p>" +
           (left > 0 ? '<p class="left"><b>' + left + '</b> left. Get yours now.</p>' : ""));
       }
+      if (cfg.LOCAL_NOTE && !local) {
+        var note = document.createElement("p");
+        note.className = "intro";
+        note.textContent = cfg.LOCAL_NOTE;
+        var after = els[i];
+        while (after.nextElementSibling && /\b(intro|left)\b/.test(after.nextElementSibling.className)) after = after.nextElementSibling;
+        after.insertAdjacentElement("afterend", note);
+      }
     }
     // Structured data carries an Offer only once there is a real price: a
     // placeholder of 0 would be a false claim to a search engine.

@@ -22,6 +22,8 @@
 //   no euro price, every visitor sees USD.
 // SEK: the same for visitors in Sweden (Europe/Stockholm), with a SEK
 //   currency option on the Stripe price. list 0 = Swedes see USD.
+// LOCAL_NOTE: a line under the price. Johan 2026-11-16: one USD price, Stripe
+//   Adaptive Pricing (always on for Payment Links) converts it at checkout.
 // SHIPPING: included: true = the pages say shipping is in the price (Johan
 //   2026-10-23). The Stripe Payment Link must agree (no shipping rates there).
 // CHECKOUT_URL: the Stripe Payment Link the order page's ORDER button opens.
@@ -33,8 +35,9 @@ window.SITE = {
   FORMSPREE_ID: "",
   PRICE: { amount: 299, currency: "USD" },
   INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 21 },
-  EUR: { list: 279, intro: 229 },
-  SEK: { list: 2795, intro: 2295 },
+  EUR: { list: 0, intro: 0 },   // off: Stripe Adaptive Pricing converts USD at checkout (2026-11-16)
+  SEK: { list: 0, intro: 0 },   // off, as EUR
+  LOCAL_NOTE: "Checkout shows the price in your local currency.",
   SHIPPING: { included: true, from: "Sweden" },
   CHECKOUT_URL: "https://buy.stripe.com/7sYdR80so2Q193AfCu2sM00",
   CONTACT: "info@playandtrack.com",
