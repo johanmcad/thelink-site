@@ -15,6 +15,11 @@
 //   after each sale — it is a real number or nothing (units 0 = no counter).
 //   When sold >= units the offer is over and the pages show the list price;
 //   change the Stripe Payment Link to the list price at the same time.
+// EUR: the same offer in euro (Johan 2026-11-16). Visitors in the euro area
+//   see these instead of PRICE / INTRO (guessed from the browser's time zone,
+//   site.js EURO_ZONES). The Stripe price must carry the SAME amounts as an
+//   EUR currency option, so checkout charges what the page showed. list 0 =
+//   no euro price, every visitor sees USD.
 // SHIPPING: included: true = the pages say shipping is in the price (Johan
 //   2026-10-23). The Stripe Payment Link must agree (no shipping rates there).
 // CHECKOUT_URL: the Stripe Payment Link the order page's ORDER button opens.
@@ -26,6 +31,7 @@ window.SITE = {
   FORMSPREE_ID: "",
   PRICE: { amount: 299, currency: "USD" },
   INTRO: { amount: 249, label: "Introductory price", units: 50, sold: 21 },
+  EUR: { list: 279, intro: 229 },
   SHIPPING: { included: true, from: "Sweden" },
   CHECKOUT_URL: "https://buy.stripe.com/7sYdR80so2Q193AfCu2sM00",
   CONTACT: "info@playandtrack.com",

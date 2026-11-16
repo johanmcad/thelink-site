@@ -33,6 +33,21 @@
   // amount CHARGED, which the calculator and the structured data use.
   var list = cfg.PRICE || {};
   var intro = cfg.INTRO || {};
+  var eur = cfg.EUR || {};
+  var usdList = Number(list.amount) || 0;
+  var usdIntro = Number(intro.amount) || 0;
+  // A visitor in the euro area sees euro. Stripe checkout picks its currency
+  // from the buyer's location the same way (a price's EUR currency option is
+  // offered only there), so the page and the checkout agree. The time zone is
+  // the guess: it needs no lookup and no permission. Not euro: the UK, the
+  // Nordics outside Finland, Switzerland, Poland, Czechia, Hungary, Romania.
+  var EURO_ZONES = /^(Europe\/(Vienna|Brussels|Nicosia|Famagusta|Tallinn|Helsinki|Mariehamn|Paris|Monaco|Berlin|Busingen|Athens|Dublin|Rome|Vatican|San_Marino|Riga|Vilnius|Luxembourg|Malta|Amsterdam|Lisbon|Bratislava|Ljubljana|Madrid|Zagreb|Sofia|Andorra|Podgorica)|Atlantic\/(Azores|Madeira|Canary)|Africa\/Ceuta|Indian\/Reunion|America\/(Martinique|Guadeloupe|Cayenne))$/;
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) { /* no Intl */ }
+  if (Number(eur.list) > 0 && (EURO_ZONES.test(tz) || /[?&]cur=eur\b/i.test(location.search))) {
+    list = { amount: Number(eur.list), currency: "EUR" };
+    intro = { amount: Number(eur.intro) || 0, label: intro.label, units: intro.units, sold: intro.sold };
+  }
   var cur = list.currency || "USD";
   var fmt = function (n) {
     try {
@@ -66,13 +81,23 @@
     if (ld) {
       try {
         var d = JSON.parse(ld.textContent);
-        d.offers = {
-          "@type": "Offer",
-          availability: "https://schema.org/InStock",
-          price: String(price.amount),
-          priceCurrency: price.currency || "USD",
-          url: "https://linkhifi.com/order.html",
+        var offer = function (amount, currency) {
+          return {
+            "@type": "Offer",
+            availability: "https://schema.org/InStock",
+            price: String(amount),
+            priceCurrency: currency,
+            url: "https://linkhifi.com/order.html",
+          };
         };
+        // Both currencies, whichever this visitor sees: a crawler's time zone
+        // says nothing about the buyer.
+        var usdNow = hasIntro && usdIntro > 0 && usdIntro < usdList ? usdIntro : usdList;
+        d.offers = [offer(usdNow, "USD")];
+        if (Number(eur.list) > 0) {
+          var eIntro = Number(eur.intro) || 0;
+          d.offers.push(offer(hasIntro && eIntro > 0 && eIntro < Number(eur.list) ? eIntro : Number(eur.list), "EUR"));
+        }
         ld.textContent = JSON.stringify(d);
       } catch (e) { /* leave the static document alone */ }
     }
