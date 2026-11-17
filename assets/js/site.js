@@ -2,7 +2,9 @@
    Three jobs: the phone menu, the price (one constant in config.js, shown
    wherever [data-price] appears), and the pre-order form, which posts to
    Formspree when an id is configured and otherwise opens the visitor's email
-   app with the fields filled in. Everything on the pages works with this file
+   app with the fields filled in. Plus the owner videos: each is a link to
+   YouTube with a picture, and a tap swaps in the player (youtube-nocookie),
+   so nothing loads from YouTube until someone asks for it. Everything on the pages works with this file
    missing; nothing here is load-bearing for reading the site. */
 (function () {
   "use strict";
@@ -204,6 +206,27 @@
       }).then(function () {
         send.disabled = false;
       });
+    });
+  }
+  // ---- owner videos: picture first, player on tap
+  var vids = document.querySelectorAll("a.vidplay[data-yt]");
+  for (var v = 0; v < vids.length; v++) {
+    vids[v].addEventListener("click", function (e) {
+      var a = e.currentTarget;
+      var id = a.getAttribute("data-yt");
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;   // follow the link instead
+      e.preventDefault();
+      var box = document.createElement("div");
+      box.className = "vidframe";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0";
+      f.title = a.getAttribute("data-title") || "Video";
+      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      f.allowFullscreen = true;
+      f.referrerPolicy = "strict-origin-when-cross-origin";
+      box.appendChild(f);
+      a.parentNode.replaceChild(box, a);
+      f.focus();
     });
   }
 })();

@@ -493,6 +493,51 @@ h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: 0; }
 .prose li { margin-bottom: 0.5em; }
 .prose code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.9em; color: var(--txt2); }
 
+/* ------------------------------------------------------------ owner videos
+   A picture with a play button; YouTube is loaded only on a tap (site.js).
+   Side by side the two columns are sized by aspect ratio (16:9 and 9:16) so
+   both videos stand exactly as tall. */
+
+.vids { display: grid; gap: 28px; margin-top: 36px; justify-items: center; }
+.vid { margin: 0; width: 100%; }
+.vid.tall { max-width: 260px; }
+.vidplay, .vidframe {
+  position: relative; display: block; overflow: hidden;
+  border-radius: var(--radius); background: #000;
+  border: 1px solid var(--plateBrd);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+.vid.wide .vidplay, .vid.wide .vidframe { aspect-ratio: 16 / 9; }
+.vid.tall .vidplay, .vid.tall .vidframe { aspect-ratio: 9 / 16; }
+.vidplay img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease, opacity 0.4s ease; opacity: 0.85; }
+.vidplay:hover img, .vidplay:focus-visible img { transform: scale(1.02); opacity: 1; }
+.vidframe iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.play {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: 68px; height: 68px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(6, 6, 7, 0.72); color: var(--green);
+  border: 1.5px solid var(--green);
+  box-shadow: 0 0 30px rgba(87, 217, 130, 0.25);
+}
+.play svg { width: 28px; height: 28px; margin-left: 4px; }
+.vid figcaption { margin-top: 14px; color: var(--txt3); font-size: var(--fs-small); text-align: center; }
+.vid figcaption b { color: var(--txt); font-weight: 500; }
+#owners { scroll-margin-top: 72px; }
+/* the hero's way down to the videos: a small play button and a line */
+.watch {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 26px;
+  color: var(--txt2); text-decoration: none;
+  letter-spacing: 0.08em; text-transform: uppercase; font-size: var(--fs-small);
+}
+.watch:hover { color: var(--txt); }
+.watch .play { position: static; translate: none; width: 40px; height: 40px; }
+.watch .play svg { width: 16px; height: 16px; margin-left: 2px; }
+@media (min-width: 720px) {
+  .vids { grid-template-columns: 1.7778fr 0.5625fr; align-items: start; }
+  .vid.tall { max-width: none; }
+}
+
 /* ------------------------------------------------------------ footer */
 
 .foot {
